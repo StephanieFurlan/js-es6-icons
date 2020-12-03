@@ -135,11 +135,29 @@ $(document).ready(function() {
    ]
 
    const typeArray = getTypes(icons);
-
    const coloredIconArray = setColors(icons, typeArray);
-   console.log(coloredIconArray);
+
+   // containers for display
    const iconContainer = $(".icons-container")
+   const selectContainer = $("#select-icons");
+
+   setTypes(typeArray, selectContainer);
+
+   // first display
    displayIcons(coloredIconArray, iconContainer);
+
+   // event change on select
+   selectContainer.on("change", function() {
+      const type = $(this).val();
+      if (type == "all") {
+         displayIcons(coloredIconArray, iconContainer);
+      } else {
+         const filteredArray = filterArray(coloredIconArray, type);
+         displayIcons(filteredArray, iconContainer);
+      }
+
+   });
+
 
 
 
@@ -147,7 +165,7 @@ $(document).ready(function() {
    // FUNCTIONS
 
    function displayIcons(iconArray, container) {
-
+      container.empty();
       iconArray.forEach(icon => {
          const {name, prefix, type, family, color} = icon;
          container.append(`
@@ -180,6 +198,20 @@ $(document).ready(function() {
          coloredIconArray.push(coloredIcon);
       });
       return coloredIconArray;
+   }
+
+   function setTypes(typeArray, container) {
+      typeArray.forEach(type => {
+         container.append(`
+            <option value="${type}">${type[0].toUpperCase() + type.slice(1)}</option>
+         `);
+      })
+   };
+
+   function filterArray(iconArray, type) {
+      return iconArray.filter(icon => {
+         return icon.type == type;
+      });
    }
 
 
