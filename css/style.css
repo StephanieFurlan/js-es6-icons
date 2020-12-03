@@ -10,7 +10,15 @@ body {
 
 .header {
    height: 80px;
-   background-color: red;
+   background-color: crimson;
+   padding: 30px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.options {
+   margin-right: 50px;
 }
 
 .icons-container {

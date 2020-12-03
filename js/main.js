@@ -23,19 +23,25 @@ $(document).ready(function() {
 
    var icons = [
       {
+         name: "fighter-jet",
+         prefix: "fa-",
+         type: "vehicle",
+         family: "fas"
+      },
+      {
          name: "dog",
          prefix: "fa-",
          type: "animal",
          family: "fas"
       },
       {
-         name: "hippo",
+         name: "pepper-hot",
          prefix: "fa-",
-         type: "animal",
+         type: "vegetable",
          family: "fas"
       },
       {
-         name: "spider",
+         name: "hippo",
          prefix: "fa-",
          type: "animal",
          family: "fas"
@@ -50,6 +56,12 @@ $(document).ready(function() {
          name: "fish",
          prefix: "fa-",
          type: "animal",
+         family: "fas"
+      },
+      {
+         name: "wheelchair",
+         prefix: "fa-",
+         type: "vehicle",
          family: "fas"
       },
       {
@@ -71,17 +83,18 @@ $(document).ready(function() {
          family: "fas"
       },
       {
+         name: "spider",
+         prefix: "fa-",
+         type: "animal",
+         family: "fas"
+      },
+      {
          name: "lemon",
          prefix: "fa-",
          type: "vegetable",
          family: "fas"
       },
-      {
-         name: "pepper-hot",
-         prefix: "fa-",
-         type: "vegetable",
-         family: "fas"
-      },
+
       {
          name: "space-shuttle",
          prefix: "fa-",
@@ -101,23 +114,12 @@ $(document).ready(function() {
          family: "fas"
       },
       {
-         name: "wheelchair",
-         prefix: "fa-",
-         type: "vehicle",
-         family: "fas"
-      },
-      {
          name: "tram",
          prefix: "fa-",
          type: "vehicle",
          family: "fas"
       },
-      {
-         name: "fighter-jet",
-         prefix: "fa-",
-         type: "vehicle",
-         family: "fas"
-      },
+
       {
          name: "helicopter",
          prefix: "fa-",
@@ -125,8 +127,19 @@ $(document).ready(function() {
          family: "fas"
       }
    ]
+
+   var colors = [
+      "mediumspringgreen",
+      "royalblue",
+      "tomato"
+   ]
+
+   const typeArray = getTypes(icons);
+
+   const coloredIconArray = setColors(icons, typeArray);
+   console.log(coloredIconArray);
    const iconContainer = $(".icons-container")
-   displayIcons(icons, iconContainer);
+   displayIcons(coloredIconArray, iconContainer);
 
 
 
@@ -136,14 +149,37 @@ $(document).ready(function() {
    function displayIcons(iconArray, container) {
 
       iconArray.forEach(icon => {
-         const {name, prefix, type, family} = icon;
+         const {name, prefix, type, family, color} = icon;
          container.append(`
             <div class="icon">
                <div class="icon-title">${name}</div>
-               <i class="${family} ${prefix}${name}"></i>
+               <i style="color:${color}" class="${family} ${prefix}${name}"></i>
             </div>
             `);
       });
+   }
+
+   function getTypes(iconArray) {
+      let typeArray = [];
+      iconArray.forEach(icon => {
+         if (!typeArray.includes(icon.type)) {
+            typeArray.push(icon.type);
+         }
+      });
+      return typeArray;
+   }
+
+   function setColors(iconArray, typeArray) {
+      const coloredIconArray = [];
+      iconArray.forEach(icon => {
+         const {type} = icon;
+         const coloredIcon = {
+            ...icon,
+            color: colors[typeArray.indexOf(type)]
+         }
+         coloredIconArray.push(coloredIcon);
+      });
+      return coloredIconArray;
    }
 
 
